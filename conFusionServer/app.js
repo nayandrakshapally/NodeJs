@@ -11,6 +11,11 @@ var dishRouter = require('./routes/dishRoutes');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
 
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
+const Dishes = require('./models/dishes');
+
 
 var app = express();
 
@@ -32,12 +37,26 @@ app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
 
+
+// Connection URL code with mongo integration
+const url = 'mongodb://localhost:27017/conFusion';
+const connect = mongoose.connect(url, {
+    useMongoClient: true,
+    /* other options */
+  });
+
+connect.then((db) => {
+    console.log("Connected correctly to server");
+}, (err) => { console.log(err); });
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
