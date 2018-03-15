@@ -10,6 +10,8 @@ var users = require('./routes/users');
 var dishRouter = require('./routes/dishRoutes');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
+const uploadRouter = require('./routes/uploadRouter');
+
 
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
@@ -75,6 +77,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/imageUpload',uploadRouter);
 
 
 // Connection URL code with mongo integration
